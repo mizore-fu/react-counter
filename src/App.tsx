@@ -12,19 +12,26 @@ function App() {
     });
   }, []);
 
-  const incrementCount = () => {
-    setCount((c) => c + 1);
+  const increaseCount = async () => {
+    await axios.put(`${BASE_URL}/countup`);
+    axios.get(`${BASE_URL}/count`).then(({ data }) => {
+      setCount(data.count);
+    });
   };
-  const decrementCount = () => {
-    setCount((c) => c - 1);
+
+  const decreaseCount = async () => {
+    await axios.put(`${BASE_URL}/countdown`);
+    axios.get(`${BASE_URL}/count`).then(({ data }) => {
+      setCount(data.count);
+    });
   };
 
   return (
     <div className="App">
       <h1>Counter</h1>
       <div>{count}</div>
-      <Button text="+" handleClick={incrementCount} />
-      <Button text="-" handleClick={decrementCount} />
+      <Button text="+" handleClick={increaseCount} />
+      <Button text="-" handleClick={decreaseCount} />
     </div>
   );
 }
